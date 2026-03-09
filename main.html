@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GitHub Issues Tracker</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 </head>
 
@@ -17,7 +17,7 @@
     </div>
     
     <div class="flex items-center gap-4">
-        <input type="text" placeholder="Search issues..." class="border rounded-lg p-2 text-sm w-64">
+        <input id="searchInput" type="text" placeholder="Search issues..." class="border rounded-lg border-[#E4E4E7] p-2 text-sm w-64">
         
         <button class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-2 rounded-lg text-sm"> + New Issue</button>
     </div>
@@ -25,17 +25,17 @@
 </nav>
 
 <!-- Main Container -->
-<div class="max-w-6xl mx-8 mt-8">
+<div class="max-w-8xl mx-8 mt-8">
 
 <!-- Filter Buttons -->
 <div class="bg-white p-6 rounded-lg shadow mb-6">
     <div class="flex gap-4">
         
-        <button class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2 rounded">All</button>
+        <button onclick="renderIssues('all')" class=" border px-6 py-2 bg-purple-500 text-white rounded border-[#E4E4E7] ">All</button>
         
-        <button class="border px-6 py-2 rounded text-gray-600">Open</button>
+        <button onclick="renderIssues('open')" class="border border-[#E4E4E7]  px-6 py-2 rounded text-gray-600">Open</button>
         
-        <button class="border px-6 py-2 rounded text-gray-600">Closed</button>
+        <button onclick="renderIssues('closed')" class="border border-[#E4E4E7]  px-6 py-2 rounded text-gray-600">Closed</button>
     </div>
 
 </div>
@@ -43,9 +43,9 @@
 <!-- Issue Header -->
 <div class="bg-white shadow mb-6 p-6 flex justify-between items-center rounded-lg">
     <div class="flex justify-center items-center">
-        <div><img src="assets/Aperture.png" alt="" class="bg-gray-300 rounded-full border-8 mx-2"></div>
+        <div><img src="assets/Aperture.png" alt="" class="border-[#E4E4E7] rounded-full border-8 mx-2"></div>
         <div>
-            <h2 class="text-xl font-semibold">50 Issues</h2>
+            <h2 class="text-xl font-semibold"><span id="issueCount">50</span>Issues</h2>
             <p class="text-gray-500 text-sm">Track and manage your project issues</p>
         </div>
     </div>
@@ -65,7 +65,7 @@
 </div>
 
 <!-- Issues Grid -->
-<div class="grid grid-cols-4 gap-6">
+<div id="issuesContainer" class="grid lg:grid-cols-4 grid-cols-1 md:grid-cols-2 gap-6">
 
 <!-- Card -->
 <div class="bg-white rounded-lg shadow p-4 border-t-4 border-green-500">
@@ -470,6 +470,72 @@
 </div>
 
 </div>
+
+<!--issue model-->
+<div id="issueModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+
+  <div class="bg-white w-[420px] rounded-xl shadow-xl p-6">
+
+    <!-- Title -->
+    <h2 id="modalTitle" class="text-lg font-bold mb-2">
+      Issue Title
+    </h2>
+
+    <!-- Status Row -->
+    <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+      <span id="modalStatus"
+        class="px-2 py-1 text-white text-xs rounded-full bg-green-500">
+        Opened
+      </span>
+
+      <ul class="flex items-center gap-2 ">
+        <li><span id="modalAuthor">. Opened by Admin</span></li>
+        <li><span id="modalDate">. May 12 2024</span></li>
+      </ul>
+    </div>
+
+      <div class="flex gap-2 mb-3">
+        <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">BUG</span>
+        <span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">HELP WANTED</span>
+    </div>
+
+    <!-- Description -->
+    <p id="modalDescription" class="text-sm text-gray-600 mb-5">
+      Issue description here...
+    </p>
+
+    <!-- Bottom Details -->
+    <div class="bg-gray-100 rounded-lg p-4 flex justify-between">
+
+      <div>
+        <p class="text-xs text-gray-500">Assignee:</p>
+        <p id="modalAssignee" class="text-sm font-medium">John Doe</p>
+      </div>
+
+      <div>
+        <p class="text-xs text-gray-500">Priority:</p>
+        <span id="modalPriority"
+          class="px-2 py-1 text-white text-xs rounded bg-red-500">
+          HIGH
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Close Button -->
+    <div class="mt-5 text-right">
+      <button id="closeModal"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-md">
+        Close
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
